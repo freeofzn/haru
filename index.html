@@ -1,708 +1,527 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" id="themeColor" content="#E6EDE8" />
-    <script>
-      // 저장된 테마를 그리기 전에 적용 (깜빡임 방지)
-      (function () {
-        var t = null;
-        try {
-          t = localStorage.getItem("haru-theme");
-        } catch (e) {}
-        if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        document.documentElement.dataset.theme = t;
-      })();
-    </script>
-    <title>하루</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
-    <style>
-      :root {
-        --bg: #e6ede8; /* 세이지 안개 */
-        --paper: #fbfcfa;
-        --ink: #16302a; /* 짙은 소나무 */
-        --muted: #6b7e74;
-        --line: #dce5df;
-        --accent: #2e7d5b; /* 소나무 초록 */
-        --accent-soft: #d7ebdf;
-        --gold: #d9a23a; /* 진행 막대 끝 */
-        --danger: #b4483c;
-        --shadow: 0 1px 0 rgba(22, 48, 42, 0.04), 0 12px 32px -18px rgba(22, 48, 42, 0.35);
-      }
-      :root[data-theme="dark"] {
-        --bg: #101814;
-        --paper: #18221d;
-        --ink: #e4eee8;
-        --muted: #8da197;
-        --line: #26332c;
-        --accent: #5fbf8e;
-        --accent-soft: #1f3a2d;
-        --gold: #e8b656;
-        --danger: #e27d70;
-        --shadow: 0 12px 32px -18px rgba(0, 0, 0, 0.8);
-      }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="하루">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" id="themeColor" content="#E6EDE8">
+<script>
+  // 저장된 테마를 그리기 전에 적용 (깜빡임 방지)
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('haru-theme'); } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
+<title>하루</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #E6EDE8;        /* 세이지 안개 */
+    --paper: #FBFCFA;
+    --ink: #16302A;       /* 짙은 소나무 */
+    --muted: #6B7E74;
+    --line: #DCE5DF;
+    --accent: #2E7D5B;    /* 소나무 초록 */
+    --accent-soft: #D7EBDF;
+    --gold: #D9A23A;      /* 진행 막대 끝 */
+    --danger: #B4483C;
+    --shadow: 0 1px 0 rgba(22,48,42,.04), 0 12px 32px -18px rgba(22,48,42,.35);
+  }
+  :root[data-theme="dark"] {
+    --bg: #101814;
+    --paper: #18221D;
+    --ink: #E4EEE8;
+    --muted: #8DA197;
+    --line: #26332C;
+    --accent: #5FBF8E;
+    --accent-soft: #1F3A2D;
+    --gold: #E8B656;
+    --danger: #E27D70;
+    --shadow: 0 12px 32px -18px rgba(0,0,0,.8);
+  }
 
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      html {
-        -webkit-text-size-adjust: 100%;
-      }
-      body {
-        background: var(--bg);
-        color: var(--ink);
-        font-family: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-        min-height: 100vh;
-        padding: max(28px, env(safe-area-inset-top)) 16px max(40px, env(safe-area-inset-bottom));
-      }
-      main {
-        max-width: 540px;
-        margin: 0 auto;
-      }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    min-height: 100vh;
+    padding: max(28px, env(safe-area-inset-top)) 16px max(40px, env(safe-area-inset-bottom));
+  }
+  main { max-width: 540px; margin: 0 auto; }
 
-      /* 머리: 날짜가 주인공 */
-      .head {
-        padding: 8px 4px 20px;
-      }
-      .head-top {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 12px;
-      }
-      .theme-toggle {
-        flex-shrink: 0;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        border: 1px solid var(--line);
-        background: var(--paper);
-        color: var(--ink);
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-        box-shadow: var(--shadow);
-      }
-      .theme-toggle svg {
-        width: 20px;
-        height: 20px;
-      }
-      .theme-toggle .sun {
-        display: none;
-      }
-      :root[data-theme="dark"] .theme-toggle .sun {
-        display: block;
-      }
-      :root[data-theme="dark"] .theme-toggle .moon {
-        display: none;
-      }
-      body {
-        transition:
-          background-color 0.3s,
-          color 0.3s;
-      }
-      .weekday {
-        font-size: 0.95rem;
-        font-weight: 500;
-        color: var(--accent);
-      }
-      .date {
-        font-size: clamp(2.2rem, 9vw, 2.8rem);
-        font-weight: 700;
-        letter-spacing: -0.03em;
-        line-height: 1.15;
-      }
-      .status {
-        margin-top: 6px;
-        color: var(--muted);
-        font-size: 0.95rem;
-      }
+  /* 머리: 날짜가 주인공 */
+  .head { padding: 8px 4px 20px; }
+  .head-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .theme-toggle {
+    flex-shrink: 0;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+    display: grid; place-items: center; cursor: pointer;
+    box-shadow: var(--shadow);
+  }
+  .theme-toggle svg { width: 20px; height: 20px; }
+  .theme-toggle .sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .moon { display: none; }
+  body { transition: background-color .3s, color .3s; }
+  .weekday { font-size: 0.95rem; font-weight: 500; color: var(--accent); }
+  .date {
+    font-size: clamp(2.2rem, 9vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+  .status { margin-top: 6px; color: var(--muted); font-size: 0.95rem; }
 
-      /* 진행 막대 */
-      .bar {
-        margin-top: 14px;
-        height: 8px;
-        border-radius: 99px;
-        background: var(--line);
-        overflow: hidden;
-      }
-      .bar > span {
-        display: block;
-        height: 100%;
-        width: 0;
-        border-radius: inherit;
-        background: linear-gradient(90deg, var(--accent), var(--gold));
-        transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
+  /* 진행 막대 */
+  .bar {
+    margin-top: 14px; height: 8px; border-radius: 99px;
+    background: var(--line); overflow: hidden;
+  }
+  .bar > span {
+    display: block; height: 100%; width: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    transition: width .5s cubic-bezier(.2,.8,.2,1);
+  }
 
-      /* 입력 */
-      form {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: var(--paper);
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 6px 6px 6px 16px;
-        box-shadow: var(--shadow);
-      }
-      form:focus-within {
-        border-color: var(--accent);
-      }
-      #input {
-        flex: 1;
-        min-width: 0;
-        border: 0;
-        background: transparent;
-        color: var(--ink);
-        font: inherit;
-        font-size: 16px; /* iOS 확대 방지 */
-        padding: 10px 0;
-      }
-      #input::placeholder {
-        color: var(--muted);
-      }
-      #input:focus {
-        outline: none;
-      }
-      .add {
-        flex-shrink: 0;
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        border: 0;
-        background: var(--accent);
-        color: var(--paper);
-        font-size: 1.6rem;
-        line-height: 1;
-        cursor: pointer;
-        display: grid;
-        place-items: center;
-      }
-      .add:active {
-        transform: scale(0.94);
-      }
+  /* 입력 */
+  form {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 6px 6px 6px 16px;
+    box-shadow: var(--shadow);
+  }
+  form:focus-within { border-color: var(--accent); }
+  #input {
+    flex: 1; min-width: 0;
+    border: 0; background: transparent; color: var(--ink);
+    font: inherit; font-size: 16px; /* iOS 확대 방지 */
+    padding: 10px 0;
+  }
+  #input::placeholder { color: var(--muted); }
+  #input:focus { outline: none; }
+  .add {
+    flex-shrink: 0;
+    width: 44px; height: 44px; border-radius: 12px;
+    border: 0; background: var(--accent); color: var(--paper);
+    font-size: 1.6rem; line-height: 1; cursor: pointer;
+    display: grid; place-items: center;
+  }
+  .add:active { transform: scale(.94); }
 
-      /* 필터 */
-      .filters {
-        display: flex;
-        gap: 6px;
-        margin: 20px 0 10px;
-        padding: 0 2px;
-      }
-      .filters button {
-        border: 1px solid transparent;
-        background: transparent;
-        color: var(--muted);
-        font: inherit;
-        font-size: 0.9rem;
-        font-weight: 500;
-        padding: 7px 14px;
-        border-radius: 99px;
-        cursor: pointer;
-        white-space: nowrap;
-      }
-      .filters button[aria-pressed="true"] {
-        color: var(--accent);
-        background: var(--accent-soft);
-      }
-      .filters .n {
-        margin-left: 4px;
-        opacity: 0.7;
-        font-variant-numeric: tabular-nums;
-      }
+  /* 필터 */
+  .filters {
+    display: flex; gap: 6px; margin: 20px 0 10px; padding: 0 2px;
+  }
+  .filters button {
+    border: 1px solid transparent; background: transparent; color: var(--muted);
+    font: inherit; font-size: 0.9rem; font-weight: 500;
+    padding: 7px 14px; border-radius: 99px; cursor: pointer;
+    white-space: nowrap;
+  }
+  .filters button[aria-pressed="true"] {
+    color: var(--accent); background: var(--accent-soft);
+  }
+  .filters .n { margin-left: 4px; opacity: .7; font-variant-numeric: tabular-nums; }
 
-      /* 목록 */
-      .sheet {
-        background: var(--paper);
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        box-shadow: var(--shadow);
-        overflow: hidden;
-      }
-      ul {
-        list-style: none;
-      }
-      li.item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 8px 12px 14px;
-        border-bottom: 1px solid var(--line);
-      }
-      li.item:last-child {
-        border-bottom: 0;
-      }
+  /* 목록 */
+  .sheet {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  ul { list-style: none; }
+  li.item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 8px 12px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  li.item:last-child { border-bottom: 0; }
 
-      /* 둥근 체크 */
-      .check {
-        appearance: none;
-        -webkit-appearance: none;
-        flex-shrink: 0;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        border: 2px solid var(--muted);
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-        transition:
-          background 0.2s,
-          border-color 0.2s;
-      }
-      .check::after {
-        content: "";
-        width: 6px;
-        height: 11px;
-        border: solid var(--paper);
-        border-width: 0 2.5px 2.5px 0;
-        transform: translateY(-1px) rotate(45deg) scale(0);
-        transition: transform 0.2s cubic-bezier(0.3, 1.6, 0.5, 1);
-      }
-      .check:checked {
-        background: var(--accent);
-        border-color: var(--accent);
-      }
-      .check:checked::after {
-        transform: translateY(-1px) rotate(45deg) scale(1);
-      }
+  /* 둥근 체크 */
+  .check {
+    appearance: none; -webkit-appearance: none;
+    flex-shrink: 0;
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 2px solid var(--muted);
+    display: grid; place-items: center;
+    cursor: pointer; transition: background .2s, border-color .2s;
+  }
+  .check::after {
+    content: ""; width: 6px; height: 11px;
+    border: solid var(--paper); border-width: 0 2.5px 2.5px 0;
+    transform: translateY(-1px) rotate(45deg) scale(0);
+    transition: transform .2s cubic-bezier(.3,1.6,.5,1);
+  }
+  .check:checked { background: var(--accent); border-color: var(--accent); }
+  .check:checked::after { transform: translateY(-1px) rotate(45deg) scale(1); }
 
-      .text {
-        flex: 1;
-        min-width: 0;
-        line-height: 1.5;
-        word-break: keep-all;
-        overflow-wrap: anywhere;
-        touch-action: manipulation; /* 모바일 더블탭 수정 */
-        cursor: text;
-      }
-      li.done .text {
-        color: var(--muted);
-        text-decoration: line-through;
-        text-decoration-color: var(--muted);
-      }
-      .edit {
-        flex: 1;
-        min-width: 0;
-        font: inherit;
-        font-size: 16px;
-        color: var(--ink);
-        background: var(--bg);
-        border: 1px solid var(--accent);
-        border-radius: 8px;
-        padding: 6px 10px;
-      }
-      .del {
-        flex-shrink: 0;
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        border: 0;
-        background: transparent;
-        color: var(--muted);
-        font-size: 1.3rem;
-        line-height: 1;
-        cursor: pointer;
-      }
-      .del:hover,
-      .del:active {
-        color: var(--danger);
-        background: var(--bg);
-      }
+  .text {
+    flex: 1; min-width: 0;
+    line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere;
+    touch-action: manipulation; /* 모바일 더블탭 수정 */
+    cursor: text;
+  }
+  li.done .text { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--muted); }
+  .edit {
+    flex: 1; min-width: 0;
+    font: inherit; font-size: 16px; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--accent);
+    border-radius: 8px; padding: 6px 10px;
+  }
+  .del {
+    flex-shrink: 0;
+    width: 36px; height: 36px; border-radius: 10px;
+    border: 0; background: transparent; color: var(--muted);
+    font-size: 1.3rem; line-height: 1; cursor: pointer;
+  }
+  .del:hover, .del:active { color: var(--danger); background: var(--bg); }
 
-      /* 순서 바꾸기 손잡이 */
-      .handle {
-        flex-shrink: 0;
-        width: 22px;
-        height: 36px;
-        margin-left: -6px;
-        display: grid;
-        place-items: center;
-        border: 0;
-        background: transparent;
-        color: var(--muted);
-        cursor: grab;
-        touch-action: none;
-        opacity: 0.55;
-        border-radius: 6px;
-      }
-      .handle:hover {
-        opacity: 1;
-      }
-      .handle svg {
-        width: 10px;
-        height: 16px;
-        fill: currentColor;
-      }
-      li.item.dragging {
-        background: var(--accent-soft);
-        box-shadow: var(--shadow);
-        position: relative;
-        z-index: 1;
-      }
-      li.item.dragging .handle {
-        cursor: grabbing;
-        opacity: 1;
-        color: var(--accent);
-      }
-      body.is-dragging {
-        user-select: none;
-        -webkit-user-select: none;
-      }
+  /* 순서 바꾸기 손잡이 */
+  .handle {
+    flex-shrink: 0;
+    width: 22px; height: 36px; margin-left: -6px;
+    display: grid; place-items: center;
+    border: 0; background: transparent; color: var(--muted);
+    cursor: grab; touch-action: none; opacity: .55; border-radius: 6px;
+  }
+  .handle:hover { opacity: 1; }
+  .handle svg { width: 10px; height: 16px; fill: currentColor; }
+  li.item.dragging {
+    background: var(--accent-soft);
+    box-shadow: var(--shadow);
+    position: relative; z-index: 1;
+  }
+  li.item.dragging .handle { cursor: grabbing; opacity: 1; color: var(--accent); }
+  body.is-dragging { user-select: none; -webkit-user-select: none; }
 
-      .empty {
-        padding: 44px 20px;
-        text-align: center;
-        color: var(--muted);
-        line-height: 1.6;
-      }
+  .empty { padding: 44px 20px; text-align: center; color: var(--muted); line-height: 1.6; }
 
-      /* 하단 도구 */
-      footer {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 4px 8px;
-        margin-top: 18px;
-      }
-      footer button {
-        border: 0;
-        background: transparent;
-        color: var(--muted);
-        font: inherit;
-        font-size: 0.85rem;
-        cursor: pointer;
-        padding: 8px 10px;
-        border-radius: 8px;
-        white-space: nowrap;
-      }
-      footer button:hover {
-        color: var(--ink);
-        background: var(--paper);
-      }
+  /* 하단 도구 */
+  footer {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 8px;
+    margin-top: 18px;
+  }
+  footer button {
+    border: 0; background: transparent; color: var(--muted);
+    font: inherit; font-size: 0.85rem; cursor: pointer;
+    padding: 8px 10px; border-radius: 8px; white-space: nowrap;
+  }
+  footer button:hover { color: var(--ink); background: var(--paper); }
 
-      button:focus-visible,
-      input:focus-visible {
-        outline: 2px solid var(--accent);
-        outline-offset: 2px;
-      }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::after {
-          transition: none !important;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <section class="head">
-        <div class="head-top">
-          <div>
-            <div class="weekday" id="weekday"></div>
-            <div class="date" id="date"></div>
-          </div>
-          <button class="theme-toggle" id="themeToggle" type="button" aria-label="다크 모드로 바꾸기">
-            <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
-            <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="4.5" />
-              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-            </svg>
-          </button>
-        </div>
-        <div class="status" id="status"></div>
-        <div class="bar" aria-hidden="true"><span id="bar"></span></div>
-      </section>
-
-      <form id="form">
-        <input id="input" type="text" placeholder="무엇을 할까요?" autocomplete="off" enterkeyhint="done" maxlength="200" aria-label="새 할 일" />
-        <button class="add" type="submit" aria-label="할 일 추가">+</button>
-      </form>
-
-      <div class="filters" role="group" aria-label="목록 보기">
-        <button data-filter="all" aria-pressed="true">전체<span class="n" id="nAll"></span></button>
-        <button data-filter="active" aria-pressed="false">할일<span class="n" id="nActive"></span></button>
-        <button data-filter="done" aria-pressed="false">완료<span class="n" id="nDone"></span></button>
+  @media (prefers-reduced-motion: reduce) {
+    *, *::after { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="head">
+    <div class="head-top">
+      <div>
+        <div class="weekday" id="weekday"></div>
+        <div class="date" id="date"></div>
       </div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="다크 모드로 바꾸기">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
+    <div class="status" id="status"></div>
+    <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+  </section>
 
-      <div class="sheet">
-        <ul id="list"></ul>
-      </div>
+  <form id="form">
+    <input id="input" type="text" placeholder="무엇을 할까요?" autocomplete="off" enterkeyhint="done" maxlength="200" aria-label="새 할 일">
+    <button class="add" type="submit" aria-label="할 일 추가">+</button>
+  </form>
 
-      <footer>
-        <button id="clearDone">완료 항목 지우기</button>
-        <button id="export">백업 받기</button>
-        <button id="import">백업 불러오기</button>
-        <input id="file" type="file" accept="application/json" hidden />
-      </footer>
-    </main>
+  <div class="filters" role="group" aria-label="목록 보기">
+    <button data-filter="all" aria-pressed="true">전체<span class="n" id="nAll"></span></button>
+    <button data-filter="active" aria-pressed="false">할 일<span class="n" id="nActive"></span></button>
+    <button data-filter="done" aria-pressed="false">완료<span class="n" id="nDone"></span></button>
+  </div>
 
-    <script>
-      const KEY = "master-todo-v1"; // 기존 데이터 그대로 사용
-      let todos = load();
-      let filter = "all";
+  <div class="sheet">
+    <ul id="list"></ul>
+  </div>
 
-      const $ = (id) => document.getElementById(id);
-      const list = $("list");
+  <footer>
+    <button id="clearDone">완료 항목 지우기</button>
+    <button id="export">백업 받기</button>
+    <button id="import">백업 불러오기</button>
+    <input id="file" type="file" accept="application/json" hidden>
+  </footer>
+</main>
 
-      // 날짜 머리
-      const now = new Date();
-      $("weekday").textContent = now.toLocaleDateString("ko-KR", { weekday: "long" });
-      $("date").textContent = now.toLocaleDateString("ko-KR", { month: "long", day: "numeric" });
+<script>
+  const KEY = 'master-todo-v1';   // 기존 데이터 그대로 사용
+  let todos = load();
+  let filter = 'all';
 
-      function load() {
-        try {
-          return JSON.parse(localStorage.getItem(KEY)) || [];
-        } catch {
-          return [];
-        }
-      }
-      function save() {
-        try {
-          localStorage.setItem(KEY, JSON.stringify(todos));
-        } catch {}
-      }
+  const $ = id => document.getElementById(id);
+  const list = $('list');
 
-      function render() {
-        const total = todos.length;
-        const done = todos.filter((t) => t.done).length;
-        const left = total - done;
+  // 날짜 머리
+  const now = new Date();
+  $('weekday').textContent = now.toLocaleDateString('ko-KR', { weekday: 'long' });
+  $('date').textContent = now.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' });
 
-        // 상태 문구 + 진행 막대
-        $("status").textContent = total === 0 ? "아직 적어둔 일이 없습니다" : left === 0 ? `${total}개 모두 끝냈습니다` : `${left}개 남았습니다 · ${done}개 완료`;
-        $("bar").style.width = total ? `${(done / total) * 100}%` : "0";
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+    catch { return []; }
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(todos)); } catch {}
+  }
 
-        $("nAll").textContent = total;
-        $("nActive").textContent = left;
-        $("nDone").textContent = done;
+  function render() {
+    const total = todos.length;
+    const done = todos.filter(t => t.done).length;
+    const left = total - done;
 
-        const shown = todos.filter((t) => (filter === "all" ? true : filter === "done" ? t.done : !t.done));
+    // 상태 문구 + 진행 막대
+    $('status').textContent =
+      total === 0 ? '아직 적어둔 일이 없습니다' :
+      left === 0  ? `${total}개 모두 끝냈습니다` :
+                    `${left}개 남았습니다 · ${done}개 완료`;
+    $('bar').style.width = total ? `${(done / total) * 100}%` : '0';
 
-        list.innerHTML = "";
-        if (shown.length === 0) {
-          const msg = {
-            all: "위 칸에 할 일을 적고 + 를 누르세요.",
-            active: "남은 일이 없습니다.",
-            done: "완료한 일이 아직 없습니다.",
-          };
-          const li = document.createElement("li");
-          li.className = "empty";
-          li.textContent = msg[filter];
-          list.appendChild(li);
-          return;
-        }
+    $('nAll').textContent = total;
+    $('nActive').textContent = left;
+    $('nDone').textContent = done;
 
-        for (const t of shown) {
-          const li = document.createElement("li");
-          li.className = "item" + (t.done ? " done" : "");
+    const shown = todos.filter(t =>
+      filter === 'all' ? true : filter === 'done' ? t.done : !t.done
+    );
 
-          const cb = document.createElement("input");
-          cb.type = "checkbox";
-          cb.className = "check";
-          cb.checked = t.done;
-          cb.setAttribute("aria-label", `${t.text} 완료 표시`);
-          cb.addEventListener("change", () => {
-            t.done = cb.checked;
-            t.doneAt = t.done ? Date.now() : null;
-            save();
-            render();
-          });
+    list.innerHTML = '';
+    if (shown.length === 0) {
+      const msg = {
+        all: '위 칸에 할 일을 적고 + 를 누르세요.',
+        active: '남은 일이 없습니다.',
+        done: '완료한 일이 아직 없습니다.'
+      };
+      const li = document.createElement('li');
+      li.className = 'empty';
+      li.textContent = msg[filter];
+      list.appendChild(li);
+      return;
+    }
 
-          const span = document.createElement("span");
-          span.className = "text";
-          span.textContent = t.text;
-          span.title = "두 번 눌러 수정";
-          span.addEventListener("dblclick", () => startEdit(li, span, t));
+    for (const t of shown) {
+      const li = document.createElement('li');
+      li.className = 'item' + (t.done ? ' done' : '');
 
-          const del = document.createElement("button");
-          del.className = "del";
-          del.textContent = "×";
-          del.setAttribute("aria-label", `${t.text} 삭제`);
-          del.addEventListener("click", () => {
-            todos = todos.filter((x) => x.id !== t.id);
-            save();
-            render();
-          });
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.className = 'check';
+      cb.checked = t.done;
+      cb.setAttribute('aria-label', `${t.text} 완료 표시`);
+      cb.addEventListener('change', () => {
+        t.done = cb.checked;
+        t.doneAt = t.done ? Date.now() : null;
+        save(); render();
+      });
 
-          const handle = document.createElement("button");
-          handle.className = "handle";
-          handle.type = "button";
-          handle.setAttribute("aria-label", `${t.text} 순서 바꾸기 (위아래 화살표)`);
-          handle.innerHTML = '<svg viewBox="0 0 10 16" aria-hidden="true"><circle cx="2" cy="2" r="1.6"/><circle cx="8" cy="2" r="1.6"/><circle cx="2" cy="8" r="1.6"/><circle cx="8" cy="8" r="1.6"/><circle cx="2" cy="14" r="1.6"/><circle cx="8" cy="14" r="1.6"/></svg>';
-          handle.addEventListener("pointerdown", startDrag);
-          handle.addEventListener("keydown", (e) => {
-            if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
-            e.preventDefault();
-            const sib = e.key === "ArrowUp" ? li.previousElementSibling : li.nextElementSibling;
-            if (!sib) return;
-            e.key === "ArrowUp" ? list.insertBefore(li, sib) : list.insertBefore(sib, li);
-            commitOrder();
-            list.querySelector(`li[data-id="${t.id}"] .handle`)?.focus();
-          });
+      const span = document.createElement('span');
+      span.className = 'text';
+      span.textContent = t.text;
+      span.title = '두 번 눌러 수정';
+      span.addEventListener('dblclick', () => startEdit(li, span, t));
 
-          li.dataset.id = t.id;
-          li.append(handle, cb, span, del);
-          list.appendChild(li);
-        }
-      }
+      const del = document.createElement('button');
+      del.className = 'del';
+      del.textContent = '×';
+      del.setAttribute('aria-label', `${t.text} 삭제`);
+      del.addEventListener('click', () => {
+        todos = todos.filter(x => x.id !== t.id);
+        save(); render();
+      });
 
-      // ── 끌어서 순서 바꾸기 (마우스·터치 공통) ──
-      let dragLi = null;
-
-      function startDrag(e) {
+      const handle = document.createElement('button');
+      handle.className = 'handle';
+      handle.type = 'button';
+      handle.setAttribute('aria-label', `${t.text} 순서 바꾸기 (위아래 화살표)`);
+      handle.innerHTML = '<svg viewBox="0 0 10 16" aria-hidden="true"><circle cx="2" cy="2" r="1.6"/><circle cx="8" cy="2" r="1.6"/><circle cx="2" cy="8" r="1.6"/><circle cx="8" cy="8" r="1.6"/><circle cx="2" cy="14" r="1.6"/><circle cx="8" cy="14" r="1.6"/></svg>';
+      handle.addEventListener('pointerdown', startDrag);
+      handle.addEventListener('keydown', e => {
+        if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
         e.preventDefault();
-        dragLi = e.currentTarget.closest("li");
-        dragLi.classList.add("dragging");
-        document.body.classList.add("is-dragging");
-        // 노드를 옮기면 포인터 캡처가 풀리므로 window에서 받는다
-        window.addEventListener("pointermove", onDrag);
-        window.addEventListener("pointerup", endDrag, { once: true });
-        window.addEventListener("pointercancel", endDrag, { once: true });
-      }
-
-      function onDrag(e) {
-        if (!dragLi) return;
-        const others = [...list.querySelectorAll("li.item:not(.dragging)")];
-        const next = others.find((el) => {
-          const r = el.getBoundingClientRect();
-          return e.clientY < r.top + r.height / 2;
-        });
-        if (next) {
-          if (next !== dragLi.nextElementSibling) list.insertBefore(dragLi, next);
-        } else if (dragLi !== list.lastElementChild) list.appendChild(dragLi);
-      }
-
-      function endDrag() {
-        window.removeEventListener("pointermove", onDrag);
-        window.removeEventListener("pointerup", endDrag);
-        window.removeEventListener("pointercancel", endDrag);
-        document.body.classList.remove("is-dragging");
-        if (!dragLi) return;
-        dragLi.classList.remove("dragging");
-        dragLi = null;
+        const sib = e.key === 'ArrowUp' ? li.previousElementSibling : li.nextElementSibling;
+        if (!sib) return;
+        e.key === 'ArrowUp' ? list.insertBefore(li, sib) : list.insertBefore(sib, li);
         commitOrder();
-      }
-
-      // 화면에 보이는 순서를 데이터에 반영 (필터 중이면 보이는 항목끼리만 자리 교환)
-      function commitOrder() {
-        const ids = [...list.querySelectorAll("li.item")].map((li) => li.dataset.id);
-        const shown = new Set(ids);
-        const byId = new Map(todos.map((t) => [String(t.id), t]));
-        const slots = todos.map((t, i) => (shown.has(String(t.id)) ? i : -1)).filter((i) => i >= 0);
-        const next = [...todos];
-        slots.forEach((slot, k) => {
-          next[slot] = byId.get(ids[k]);
-        });
-        todos = next;
-        save();
-        render();
-      }
-
-      function startEdit(li, span, t) {
-        const input = document.createElement("input");
-        input.className = "edit";
-        input.value = t.text;
-        input.maxLength = 200;
-        input.enterKeyHint = "done";
-        li.replaceChild(input, span);
-        input.focus();
-        input.select();
-
-        let finished = false;
-        const finish = (commit) => {
-          if (finished) return;
-          finished = true;
-          const v = input.value.trim();
-          if (commit && v) {
-            t.text = v;
-            save();
-          }
-          render();
-        };
-        input.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") finish(true);
-          if (e.key === "Escape") finish(false);
-        });
-        input.addEventListener("blur", () => finish(true));
-      }
-
-      $("form").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const v = $("input").value.trim();
-        if (!v) return;
-        todos.unshift({ id: Date.now() + Math.random(), text: v, done: false, createdAt: Date.now(), doneAt: null });
-        $("input").value = "";
-        if (filter === "done") setFilter("all");
-        save();
-        render();
+        list.querySelector(`li[data-id="${t.id}"] .handle`)?.focus();
       });
 
-      function setFilter(f) {
-        filter = f;
-        document.querySelectorAll(".filters button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === f)));
-        render();
-      }
-      document.querySelectorAll(".filters button").forEach((b) => b.addEventListener("click", () => setFilter(b.dataset.filter)));
+      li.dataset.id = t.id;
+      li.append(handle, cb, span, del);
+      list.appendChild(li);
+    }
+  }
 
-      $("clearDone").addEventListener("click", () => {
-        const n = todos.filter((t) => t.done).length;
-        if (n === 0) return;
-        if (!confirm(`완료한 ${n}개를 지울까요?`)) return;
-        todos = todos.filter((t) => !t.done);
-        save();
-        render();
-      });
+  // ── 끌어서 순서 바꾸기 (마우스·터치 공통) ──
+  let dragLi = null;
 
-      $("export").addEventListener("click", () => {
-        const blob = new Blob([JSON.stringify(todos, null, 2)], { type: "application/json" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = `todo-backup-${new Date().toISOString().slice(0, 10)}.json`;
-        a.click();
-        URL.revokeObjectURL(a.href);
-      });
+  function startDrag(e) {
+    e.preventDefault();
+    dragLi = e.currentTarget.closest('li');
+    dragLi.classList.add('dragging');
+    document.body.classList.add('is-dragging');
+    // 노드를 옮기면 포인터 캡처가 풀리므로 window에서 받는다
+    window.addEventListener('pointermove', onDrag);
+    window.addEventListener('pointerup', endDrag, { once: true });
+    window.addEventListener('pointercancel', endDrag, { once: true });
+  }
 
-      $("import").addEventListener("click", () => $("file").click());
-      $("file").addEventListener("change", async (e) => {
-        const f = e.target.files[0];
-        if (!f) return;
-        try {
-          const data = JSON.parse(await f.text());
-          if (!Array.isArray(data)) throw new Error();
-          if (!confirm(`백업의 ${data.length}개로 지금 목록을 바꿀까요?`)) return;
-          todos = data;
-          save();
-          render();
-        } catch {
-          alert("이 앱에서 받은 백업(JSON) 파일이 아닙니다. 파일을 다시 선택해 주세요.");
-        } finally {
-          e.target.value = "";
-        }
-      });
+  function onDrag(e) {
+    if (!dragLi) return;
+    const others = [...list.querySelectorAll('li.item:not(.dragging)')];
+    const next = others.find(el => {
+      const r = el.getBoundingClientRect();
+      return e.clientY < r.top + r.height / 2;
+    });
+    if (next) { if (next !== dragLi.nextElementSibling) list.insertBefore(dragLi, next); }
+    else if (dragLi !== list.lastElementChild) list.appendChild(dragLi);
+  }
 
-      // ── 라이트/다크 전환 ──
-      function applyTheme(t) {
-        document.documentElement.dataset.theme = t;
-        $("themeColor").setAttribute("content", t === "dark" ? "#101814" : "#E6EDE8");
-        $("themeToggle").setAttribute("aria-label", t === "dark" ? "라이트 모드로 바꾸기" : "다크 모드로 바꾸기");
-      }
-      applyTheme(document.documentElement.dataset.theme);
-      $("themeToggle").addEventListener("click", () => {
-        const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-        applyTheme(t);
-        try {
-          localStorage.setItem("haru-theme", t);
-        } catch {}
-      });
+  function endDrag() {
+    window.removeEventListener('pointermove', onDrag);
+    window.removeEventListener('pointerup', endDrag);
+    window.removeEventListener('pointercancel', endDrag);
+    document.body.classList.remove('is-dragging');
+    if (!dragLi) return;
+    dragLi.classList.remove('dragging');
+    dragLi = null;
+    commitOrder();
+  }
 
+  // 화면에 보이는 순서를 데이터에 반영 (필터 중이면 보이는 항목끼리만 자리 교환)
+  function commitOrder() {
+    const ids = [...list.querySelectorAll('li.item')].map(li => li.dataset.id);
+    const shown = new Set(ids);
+    const byId = new Map(todos.map(t => [String(t.id), t]));
+    const slots = todos.map((t, i) => shown.has(String(t.id)) ? i : -1).filter(i => i >= 0);
+    const next = [...todos];
+    slots.forEach((slot, k) => { next[slot] = byId.get(ids[k]); });
+    todos = next;
+    save(); render();
+  }
+
+  function startEdit(li, span, t) {
+    const input = document.createElement('input');
+    input.className = 'edit';
+    input.value = t.text;
+    input.maxLength = 200;
+    input.enterKeyHint = 'done';
+    li.replaceChild(input, span);
+    input.focus();
+    input.select();
+
+    let finished = false;
+    const finish = commit => {
+      if (finished) return;
+      finished = true;
+      const v = input.value.trim();
+      if (commit && v) { t.text = v; save(); }
       render();
-    </script>
-  </body>
+    };
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') finish(true);
+      if (e.key === 'Escape') finish(false);
+    });
+    input.addEventListener('blur', () => finish(true));
+  }
+
+  $('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const v = $('input').value.trim();
+    if (!v) return;
+    todos.unshift({ id: Date.now() + Math.random(), text: v, done: false, createdAt: Date.now(), doneAt: null });
+    $('input').value = '';
+    if (filter === 'done') setFilter('all');
+    save(); render();
+  });
+
+  function setFilter(f) {
+    filter = f;
+    document.querySelectorAll('.filters button').forEach(b =>
+      b.setAttribute('aria-pressed', String(b.dataset.filter === f))
+    );
+    render();
+  }
+  document.querySelectorAll('.filters button').forEach(b =>
+    b.addEventListener('click', () => setFilter(b.dataset.filter))
+  );
+
+  $('clearDone').addEventListener('click', () => {
+    const n = todos.filter(t => t.done).length;
+    if (n === 0) return;
+    if (!confirm(`완료한 ${n}개를 지울까요?`)) return;
+    todos = todos.filter(t => !t.done);
+    save(); render();
+  });
+
+  $('export').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(todos, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `todo-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  $('import').addEventListener('click', () => $('file').click());
+  $('file').addEventListener('change', async e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    try {
+      const data = JSON.parse(await f.text());
+      if (!Array.isArray(data)) throw new Error();
+      if (!confirm(`백업의 ${data.length}개로 지금 목록을 바꿀까요?`)) return;
+      todos = data;
+      save(); render();
+    } catch {
+      alert('이 앱에서 받은 백업(JSON) 파일이 아닙니다. 파일을 다시 선택해 주세요.');
+    } finally {
+      e.target.value = '';
+    }
+  });
+
+  // ── 라이트/다크 전환 ──
+  function applyTheme(t) {
+    document.documentElement.dataset.theme = t;
+    $('themeColor').setAttribute('content', t === 'dark' ? '#101814' : '#E6EDE8');
+    $('themeToggle').setAttribute('aria-label', t === 'dark' ? '라이트 모드로 바꾸기' : '다크 모드로 바꾸기');
+  }
+  applyTheme(document.documentElement.dataset.theme);
+  $('themeToggle').addEventListener('click', () => {
+    const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(t);
+    try { localStorage.setItem('haru-theme', t); } catch {}
+  });
+
+  render();
+</script>
+</body>
 </html>
